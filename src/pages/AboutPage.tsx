@@ -15,10 +15,9 @@ const AboutPage = () => {
 
             <h2 className="text-3xl font-semibold mt-6 mb-3 text-green-700">Функционал</h2>
             <ul className="list-disc pl-5 space-y-2 text-xl">
-              <li>Учет игроков и их статистики</li>
-              <li>Анализ эффективности</li>
-              <li>Удобное управление составом</li>
-              <li>Мобильная доступность</li>
+              <li>Добавление и удаление игроков</li>
+              <li>Сортировка списка игроков</li>
+              <li>Просмотр статистики и информации об игроке</li>
             </ul>
           </div>
       </div>

@@ -1,13 +1,31 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PlayerCard from '../components/home/PlayerCard';
-import { players } from '../mock-players';
 import Header from '../components/shared/Header';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../store';
+import { fetchPlayers } from '../store/players.slice';
+import Loader from '../components/shared/Loader';
 
 const ITEMS_PER_PAGE = 6;
 
 const HomePage = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const dispatch = useDispatch<AppDispatch>();
+  const { players, loading } = useSelector((state: RootState) => state.players);
+
+  useEffect(() => {
+    dispatch(fetchPlayers());
+  }, [dispatch]);
+
+  if (loading) return (
+    <>
+      <Header />
+      <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-300">
+        <Loader />
+      </div>
+    </>
+  );
 
   const totalPages = Math.ceil(players.length / ITEMS_PER_PAGE);
 

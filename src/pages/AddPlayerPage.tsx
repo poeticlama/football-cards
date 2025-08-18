@@ -1,10 +1,37 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import CustomInput from '../components/add_player/CustomInput';
+import { FormEvent, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../store';
+import { addPlayer } from '../store/players.slice';
 
 const AddPlayerPage = () => {
-  const handleFormSubmission = (e: React.FormEvent) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+  const handleFormSubmission = (e: FormEvent) => {
     e.preventDefault();
+    dispatch(addPlayer({
+      name,
+      club,
+      image,
+      matches: Number.parseInt(matches),
+      goals: Number.parseInt(goals),
+      assists: Number.parseInt(assists),
+      position,
+      rating: Number.parseInt(rating),
+      age: Number.parseInt(age),
+    }));
+    navigate('/');
   };
+  const [name, setName] = useState('');
+  const [age, setAge] = useState('');
+  const [club, setClub] = useState('');
+  const [position, setPosition] = useState('');
+  const [image, setImage] = useState('');
+  const [rating, setRating] = useState('');
+  const [matches, setMatches] = useState('');
+  const [goals, setGoals] = useState('');
+  const [assists, setAssists] = useState('');
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-300">
@@ -19,6 +46,7 @@ const AddPlayerPage = () => {
                   label="Player name"
                   placeholder="Enter player name"
                   type="text"
+                  onChange={(e) => setName(e.target.value)}
                 />
 
                 <CustomInput
@@ -26,6 +54,7 @@ const AddPlayerPage = () => {
                   label="Age"
                   placeholder="Enter age"
                   type="number"
+                  onChange={(e) => setAge(e.target.value)}
                 />
 
                 <CustomInput
@@ -33,6 +62,7 @@ const AddPlayerPage = () => {
                   label="Club"
                   placeholder="Enter club name"
                   type="text"
+                  onChange={(e) => setClub(e.target.value)}
                 />
 
                 <CustomInput
@@ -40,6 +70,7 @@ const AddPlayerPage = () => {
                   label="Position"
                   placeholder="Enter position"
                   type="text"
+                  onChange={(e) => setPosition(e.target.value)}
                 />
               </div>
 
@@ -49,6 +80,7 @@ const AddPlayerPage = () => {
                   label="Image URL"
                   placeholder="Enter URL for image"
                   type="url"
+                  onChange={(e) => setImage(e.target.value)}
                 />
 
                 <CustomInput
@@ -56,6 +88,7 @@ const AddPlayerPage = () => {
                   label="Rating (0-100)"
                   placeholder="Enter rating"
                   type="number"
+                  onChange={(e) => setRating(e.target.value)}
                 />
 
                 <CustomInput
@@ -63,6 +96,7 @@ const AddPlayerPage = () => {
                   label="Matches played"
                   placeholder="Enter matches count"
                   type="number"
+                  onChange={(e) => setMatches(e.target.value)}
                 />
 
                 <div className="flex space-x-4">
@@ -72,6 +106,7 @@ const AddPlayerPage = () => {
                       label="Goals"
                       placeholder="Enter goals"
                       type="number"
+                      onChange={(e) => setGoals(e.target.value)}
                     />
                   </div>
                   <div className="flex-1">
@@ -80,6 +115,7 @@ const AddPlayerPage = () => {
                       label="Assists"
                       placeholder="Enter assists"
                       type="number"
+                      onChange={(e) => setAssists(e.target.value)}
                     />
                   </div>
                 </div>

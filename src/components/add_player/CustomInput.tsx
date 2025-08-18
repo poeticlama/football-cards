@@ -1,11 +1,14 @@
+import { ChangeEvent, ChangeEventHandler } from 'react';
+
 type CustomInputProps = {
-  id: string;
-  label: string;
-  placeholder: string;
-  type: string;
+  id: string,
+  label: string,
+  placeholder: string,
+  type: string,
+  onChange: ChangeEventHandler<HTMLInputElement>,
 }
 
-const CustomInput = ({id, label, placeholder, type}: CustomInputProps) => {
+const CustomInput = ({ id, label, placeholder, type, onChange }: CustomInputProps) => {
   return (
     <>
       <label htmlFor={id} className="block text-sm font-medium text-gray-700 mb-1">
@@ -18,6 +21,7 @@ const CustomInput = ({id, label, placeholder, type}: CustomInputProps) => {
         required
         className="w-full px-4 py-2 border border-gray-500 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none"
         placeholder={placeholder}
+        onChange={onChange}
       />
     </>
   );

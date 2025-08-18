@@ -1,5 +1,5 @@
 export type PlayerType = {
-  id: number;
+  id: string;
   name: string;
   club: string;
   image: string;
@@ -9,4 +9,11 @@ export type PlayerType = {
   position: string;
   rating: number;
   age: number;
+};
+
+export type PlayersStateType = {
+  players: PlayerType[];
+  currentPlayer: PlayerType | null;
+  loading: boolean;
+  error: string | null;
 };
