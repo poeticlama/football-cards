@@ -25,7 +25,12 @@ const PlayerCard = ({ player }: PlayerCardProps) => {
           <p className="text-green-200 text-sm truncate">{player.club}</p>
         </div>
         <div className="text-right">
-          <div className="text-white font-bold text-xl">{player.rating}</div>
+          <div
+            className="text-white font-bold text-xl"
+            data-testid="player-rating"
+          >
+            {player.rating}
+          </div>
           <div className="text-green-200 text-xs">rating</div>
         </div>
       </div>
