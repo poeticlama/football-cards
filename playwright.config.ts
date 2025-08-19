@@ -6,7 +6,7 @@ export default defineConfig({
     port: 4173,
     reuseExistingServer: !process.env.CI,
   },
-  testDir: "tests/e2e",
+  testDir: "./tests",
   use: {
     baseURL: "http://localhost:4173",
     headless: true,
