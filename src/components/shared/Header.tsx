@@ -1,6 +1,14 @@
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../store';
+import { logoutUser } from '../../store/auth.slice';
 
 const Header = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const handleLogout = async () => {
+    dispatch(logoutUser());
+  }
+
   return (
     <header className="bg-green-700 text-white shadow-lg">
       <div className="container mx-auto px-4 py-4">
@@ -16,6 +24,13 @@ const Header = () => {
             className="px-4 py-2 text-lg font-light uppercase tracking-wider hover:text-green-200 transition-colors hover:underline"
           >
             About
+          </Link>
+          <Link
+            to="/login"
+            onClick={handleLogout}
+            className="px-4 py-2 text-lg font-light uppercase tracking-wider hover:text-green-200 transition-colors hover:underline"
+          >
+            Logout
           </Link>
         </nav>
       </div>

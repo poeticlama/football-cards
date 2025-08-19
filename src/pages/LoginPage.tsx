@@ -1,10 +1,25 @@
-import { Link } from 'react-router-dom';
 import CustomInput from '../components/add_player/CustomInput';
-import { FormEvent } from 'react';
+import { FormEvent, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../store';
+import { loginUser } from '../store/auth.slice';
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
-  const handleFormSubmission = (e: FormEvent) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+  const { loading, error } = useSelector((state: RootState) => state.auth);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleLogin = async (e: FormEvent) => {
     e.preventDefault();
+    setEmail('');
+    setPassword('');
+    const res = await dispatch(loginUser({ email, password }));
+    if (loginUser.fulfilled.match(res)) {
+      navigate("/");
+    }
   };
 
   return (
@@ -15,7 +30,7 @@ const LoginPage = () => {
         </div>
 
         <form
-          onSubmit={handleFormSubmission}
+          onSubmit={handleLogin}
           className="bg-transparent p-8"
         >
           <div className="space-y-6">
@@ -24,6 +39,8 @@ const LoginPage = () => {
               label="Email"
               placeholder="Enter your email"
               type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
 
             <CustomInput
@@ -31,6 +48,8 @@ const LoginPage = () => {
               label="Password"
               placeholder="Enter your password"
               type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
 
@@ -40,6 +59,7 @@ const LoginPage = () => {
           >
             Sign in
           </button>
+          {error && <div className="text-md text-red-500 text-center mt-3">Wrong email or password</div>}
         </form>
       </div>
     </div>

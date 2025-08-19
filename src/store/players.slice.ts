@@ -16,7 +16,7 @@ export const fetchPlayers = createAsyncThunk("players/fetchPlayers", async () =>
 });
 
 export const addPlayer = createAsyncThunk("players/addPlayer", async (player: Omit<PlayerType, "id">) => {
-  const docRef = await addDoc(collection(db, "players"), player);
+  await addDoc(collection(db, "players"), player);
 });
 
 export const deletePlayer = createAsyncThunk("players/deletePlayer", async (id: string) => {

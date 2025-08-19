@@ -46,6 +46,7 @@ const AddPlayerPage = () => {
                   label="Player name"
                   placeholder="Enter player name"
                   type="text"
+                  value={name}
                   onChange={(e) => setName(e.target.value)}
                 />
 
@@ -54,6 +55,7 @@ const AddPlayerPage = () => {
                   label="Age"
                   placeholder="Enter age"
                   type="number"
+                  value={age}
                   onChange={(e) => setAge(e.target.value)}
                 />
 
@@ -62,6 +64,7 @@ const AddPlayerPage = () => {
                   label="Club"
                   placeholder="Enter club name"
                   type="text"
+                  value={club}
                   onChange={(e) => setClub(e.target.value)}
                 />
 
@@ -70,6 +73,7 @@ const AddPlayerPage = () => {
                   label="Position"
                   placeholder="Enter position"
                   type="text"
+                  value={position}
                   onChange={(e) => setPosition(e.target.value)}
                 />
               </div>
@@ -80,6 +84,7 @@ const AddPlayerPage = () => {
                   label="Image URL"
                   placeholder="Enter URL for image"
                   type="url"
+                  value={image}
                   onChange={(e) => setImage(e.target.value)}
                 />
 
@@ -88,6 +93,7 @@ const AddPlayerPage = () => {
                   label="Rating (0-100)"
                   placeholder="Enter rating"
                   type="number"
+                  value={rating}
                   onChange={(e) => setRating(e.target.value)}
                 />
 
@@ -96,6 +102,7 @@ const AddPlayerPage = () => {
                   label="Matches played"
                   placeholder="Enter matches count"
                   type="number"
+                  value={matches}
                   onChange={(e) => setMatches(e.target.value)}
                 />
 
@@ -106,6 +113,7 @@ const AddPlayerPage = () => {
                       label="Goals"
                       placeholder="Enter goals"
                       type="number"
+                      value={goals}
                       onChange={(e) => setGoals(e.target.value)}
                     />
                   </div>
@@ -115,6 +123,7 @@ const AddPlayerPage = () => {
                       label="Assists"
                       placeholder="Enter assists"
                       type="number"
+                      value={assists}
                       onChange={(e) => setAssists(e.target.value)}
                     />
                   </div>
