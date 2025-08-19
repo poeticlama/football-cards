@@ -1,12 +1,11 @@
-import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../store';
-import { logoutUser } from '../../store/auth.slice';
+import { Link } from "react-router-dom"
+import { logoutUser } from "../../store/auth.slice"
+import { useAppDispatch } from "../../hooks"
 
 const Header = () => {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch()
   const handleLogout = async () => {
-    dispatch(logoutUser());
+    dispatch(logoutUser())
   }
 
   return (
@@ -35,7 +34,7 @@ const Header = () => {
         </nav>
       </div>
     </header>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

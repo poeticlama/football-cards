@@ -1,12 +1,18 @@
 type PlayerProfileProps = {
-  imageURL: string;
-  position: string;
-  name: string;
-  club: string;
-  rating: number;
+  imageURL: string
+  position: string
+  name: string
+  club: string
+  rating: number
 }
 
-const PlayerProfile = ({imageURL, position, name, club, rating}: PlayerProfileProps) => {
+const PlayerProfile = ({
+  imageURL,
+  position,
+  name,
+  club,
+  rating,
+}: PlayerProfileProps) => {
   return (
     <div className="bg-white rounded-xl shadow-md overflow-hidden mb-8">
       <div className="md:flex">
@@ -24,18 +30,14 @@ const PlayerProfile = ({imageURL, position, name, club, rating}: PlayerProfilePr
           <h1 className="block mt-1 text-2xl font-bold text-gray-900">
             {name}
           </h1>
-          <div className="mt-2 text-gray-600 font-medium">
-            {club}
-          </div>
+          <div className="mt-2 text-gray-600 font-medium">{club}</div>
           <div className="mt-4 flex">
-                <span className="text-3xl font-bold text-green-600">
-                  {rating}
-                </span>
+            <span className="text-3xl font-bold text-green-600">{rating}</span>
           </div>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default PlayerProfile;
+export default PlayerProfile

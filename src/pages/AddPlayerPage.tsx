@@ -1,44 +1,51 @@
-import { Link, useNavigate } from 'react-router-dom';
-import CustomInput from '../components/add_player/CustomInput';
-import { FormEvent, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../store';
-import { addPlayer } from '../store/players.slice';
+import { Link, useNavigate } from "react-router-dom"
+import CustomInput from "../components/add_player/CustomInput"
+import type { FormEvent } from "react"
+import { useState } from "react"
+import { addPlayer } from "../store/players.slice"
+import { useAppDispatch } from "../hooks"
 
 const AddPlayerPage = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const navigate = useNavigate();
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate()
   const handleFormSubmission = (e: FormEvent) => {
-    e.preventDefault();
-    dispatch(addPlayer({
-      name,
-      club,
-      image,
-      matches: Number.parseInt(matches),
-      goals: Number.parseInt(goals),
-      assists: Number.parseInt(assists),
-      position,
-      rating: Number.parseInt(rating),
-      age: Number.parseInt(age),
-    }));
-    navigate('/');
-  };
-  const [name, setName] = useState('');
-  const [age, setAge] = useState('');
-  const [club, setClub] = useState('');
-  const [position, setPosition] = useState('');
-  const [image, setImage] = useState('');
-  const [rating, setRating] = useState('');
-  const [matches, setMatches] = useState('');
-  const [goals, setGoals] = useState('');
-  const [assists, setAssists] = useState('');
+    e.preventDefault()
+    dispatch(
+      addPlayer({
+        name,
+        club,
+        image,
+        matches: Number.parseInt(matches),
+        goals: Number.parseInt(goals),
+        assists: Number.parseInt(assists),
+        position,
+        rating: Number.parseInt(rating),
+        age: Number.parseInt(age),
+      }),
+    )
+    navigate("/")
+  }
+  const [name, setName] = useState("")
+  const [age, setAge] = useState("")
+  const [club, setClub] = useState("")
+  const [position, setPosition] = useState("")
+  const [image, setImage] = useState("")
+  const [rating, setRating] = useState("")
+  const [matches, setMatches] = useState("")
+  const [goals, setGoals] = useState("")
+  const [assists, setAssists] = useState("")
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-300">
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-2xl mx-auto">
-          <h1 className="text-3xl md:text-4xl font-bold mb-8 text-center text-green-700">Add New Player</h1>
-          <form onSubmit={handleFormSubmission} className="bg-transparent p-6 md:p-8">
+          <h1 className="text-3xl md:text-4xl font-bold mb-8 text-center text-green-700">
+            Add New Player
+          </h1>
+          <form
+            onSubmit={handleFormSubmission}
+            className="bg-transparent p-6 md:p-8"
+          >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
               <div className="space-y-6">
                 <CustomInput
@@ -47,7 +54,7 @@ const AddPlayerPage = () => {
                   placeholder="Enter player name"
                   type="text"
                   value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={e => setName(e.target.value)}
                 />
 
                 <CustomInput
@@ -56,7 +63,7 @@ const AddPlayerPage = () => {
                   placeholder="Enter age"
                   type="number"
                   value={age}
-                  onChange={(e) => setAge(e.target.value)}
+                  onChange={e => setAge(e.target.value)}
                 />
 
                 <CustomInput
@@ -65,7 +72,7 @@ const AddPlayerPage = () => {
                   placeholder="Enter club name"
                   type="text"
                   value={club}
-                  onChange={(e) => setClub(e.target.value)}
+                  onChange={e => setClub(e.target.value)}
                 />
 
                 <CustomInput
@@ -74,7 +81,7 @@ const AddPlayerPage = () => {
                   placeholder="Enter position"
                   type="text"
                   value={position}
-                  onChange={(e) => setPosition(e.target.value)}
+                  onChange={e => setPosition(e.target.value)}
                 />
               </div>
 
@@ -85,7 +92,7 @@ const AddPlayerPage = () => {
                   placeholder="Enter URL for image"
                   type="url"
                   value={image}
-                  onChange={(e) => setImage(e.target.value)}
+                  onChange={e => setImage(e.target.value)}
                 />
 
                 <CustomInput
@@ -94,7 +101,7 @@ const AddPlayerPage = () => {
                   placeholder="Enter rating"
                   type="number"
                   value={rating}
-                  onChange={(e) => setRating(e.target.value)}
+                  onChange={e => setRating(e.target.value)}
                 />
 
                 <CustomInput
@@ -103,7 +110,7 @@ const AddPlayerPage = () => {
                   placeholder="Enter matches count"
                   type="number"
                   value={matches}
-                  onChange={(e) => setMatches(e.target.value)}
+                  onChange={e => setMatches(e.target.value)}
                 />
 
                 <div className="flex space-x-4">
@@ -114,7 +121,7 @@ const AddPlayerPage = () => {
                       placeholder="Enter goals"
                       type="number"
                       value={goals}
-                      onChange={(e) => setGoals(e.target.value)}
+                      onChange={e => setGoals(e.target.value)}
                     />
                   </div>
                   <div className="flex-1">
@@ -124,7 +131,7 @@ const AddPlayerPage = () => {
                       placeholder="Enter assists"
                       type="number"
                       value={assists}
-                      onChange={(e) => setAssists(e.target.value)}
+                      onChange={e => setAssists(e.target.value)}
                     />
                   </div>
                 </div>
@@ -149,7 +156,7 @@ const AddPlayerPage = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default AddPlayerPage;
+export default AddPlayerPage

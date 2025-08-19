@@ -1,10 +1,10 @@
-import { Link } from 'react-router-dom';
-import StatItem from './StatItem';
-import { PlayerType } from '../../types';
+import { Link } from "react-router-dom"
+import StatItem from "./StatItem"
+import type { PlayerType } from "../../types"
 
 type PlayerCardProps = {
-  player: PlayerType;
-};
+  player: PlayerType
+}
 
 const PlayerCard = ({ player }: PlayerCardProps) => {
   return (
@@ -19,7 +19,9 @@ const PlayerCard = ({ player }: PlayerCardProps) => {
           className="w-16 h-16 rounded-full object-cover border-2 border-white"
         />
         <div className="flex-1 min-w-0">
-          <h3 className="text-white font-bold text-lg truncate">{player.name}</h3>
+          <h3 className="text-white font-bold text-lg truncate">
+            {player.name}
+          </h3>
           <p className="text-green-200 text-sm truncate">{player.club}</p>
         </div>
         <div className="text-right">
@@ -36,7 +38,7 @@ const PlayerCard = ({ player }: PlayerCardProps) => {
         </div>
       </div>
     </Link>
-  );
-};
+  )
+}
 
-export default PlayerCard;
+export default PlayerCard

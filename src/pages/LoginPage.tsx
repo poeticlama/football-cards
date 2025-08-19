@@ -1,38 +1,40 @@
-import CustomInput from '../components/add_player/CustomInput';
-import { FormEvent, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../store';
-import { loginUser } from '../store/auth.slice';
-import { useNavigate } from 'react-router-dom';
+import CustomInput from "../components/add_player/CustomInput"
+import type { FormEvent } from "react"
+import { useState } from "react"
+import { useAppDispatch, useAppSelector } from "../hooks"
+import { loginUser } from "../store/auth.slice"
+import { useNavigate } from "react-router-dom"
+import Loader from "../components/shared/Loader"
 
 const LoginPage = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const navigate = useNavigate();
-  const { loading, error } = useSelector((state: RootState) => state.auth);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate()
+  const { loading, error } = useAppSelector(state => state.auth)
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
 
   const handleLogin = async (e: FormEvent) => {
-    e.preventDefault();
-    setEmail('');
-    setPassword('');
-    const res = await dispatch(loginUser({ email, password }));
+    e.preventDefault()
+    setEmail("")
+    setPassword("")
+    const res = await dispatch(loginUser({ email, password }))
     if (loginUser.fulfilled.match(res)) {
-      navigate("/");
+      navigate("/")
     }
-  };
+  }
+
+  if (loading) return <Loader />
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-300 flex items-center justify-center">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-green-700 mb-2">Log In</h1>
+          <h1 className="text-3xl md:text-4xl font-bold text-green-700 mb-2">
+            Log In
+          </h1>
         </div>
 
-        <form
-          onSubmit={handleLogin}
-          className="bg-transparent p-8"
-        >
+        <form onSubmit={handleLogin} className="bg-transparent p-8">
           <div className="space-y-6">
             <CustomInput
               id="email"
@@ -40,7 +42,7 @@ const LoginPage = () => {
               placeholder="Enter your email"
               type="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={e => setEmail(e.target.value)}
             />
 
             <CustomInput
@@ -49,7 +51,7 @@ const LoginPage = () => {
               placeholder="Enter your password"
               type="password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={e => setPassword(e.target.value)}
             />
           </div>
 
@@ -59,11 +61,15 @@ const LoginPage = () => {
           >
             Sign in
           </button>
-          {error && <div className="text-md text-red-500 text-center mt-3">Wrong email or password</div>}
+          {error && (
+            <div className="text-md text-red-500 text-center mt-3">
+              Wrong email or password
+            </div>
+          )}
         </form>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default LoginPage;
+export default LoginPage

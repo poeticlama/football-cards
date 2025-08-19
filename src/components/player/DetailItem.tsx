@@ -1,6 +1,6 @@
 type DetailItemProps = {
-  label: string;
-  value: string;
+  label: string
+  value: string
 }
 
 const DetailItem = ({ label, value }: DetailItemProps) => (
@@ -8,6 +8,6 @@ const DetailItem = ({ label, value }: DetailItemProps) => (
     <span className="text-gray-500">{label}</span>
     <span className="font-medium">{value}</span>
   </div>
-);
+)
 
-export default DetailItem;
+export default DetailItem

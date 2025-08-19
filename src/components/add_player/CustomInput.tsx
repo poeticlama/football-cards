@@ -1,18 +1,28 @@
-import { ChangeEventHandler } from 'react';
+import type { ChangeEventHandler } from "react"
 
 type CustomInputProps = {
-  id: string,
-  label: string,
-  placeholder: string,
-  type: string,
-  value: string,
-  onChange: ChangeEventHandler<HTMLInputElement>,
+  id: string
+  label: string
+  placeholder: string
+  type: string
+  value: string
+  onChange: ChangeEventHandler<HTMLInputElement>
 }
 
-const CustomInput = ({ id, label, placeholder, type, value, onChange }: CustomInputProps) => {
+const CustomInput = ({
+  id,
+  label,
+  placeholder,
+  type,
+  value,
+  onChange,
+}: CustomInputProps) => {
   return (
     <>
-      <label htmlFor={id} className="block text-sm font-medium text-gray-700 mb-1">
+      <label
+        htmlFor={id}
+        className="block text-sm font-medium text-gray-700 mb-1"
+      >
         {label}
       </label>
       <input
@@ -26,7 +36,7 @@ const CustomInput = ({ id, label, placeholder, type, value, onChange }: CustomIn
         onChange={onChange}
       />
     </>
-  );
-};
+  )
+}
 
-export default CustomInput;
+export default CustomInput

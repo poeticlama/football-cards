@@ -1,25 +1,24 @@
-import { useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
-import { RootState } from "../../store";
-import { ReactNode } from 'react';
-import Loader from '../shared/Loader';
+import { Navigate } from "react-router-dom"
+import type { ReactNode } from "react"
+import Loader from "../shared/Loader"
+import { useAppSelector } from "../../hooks"
 
 type Props = {
-  children: ReactNode;
-};
+  children: ReactNode
+}
 
 const PrivateRoute = ({ children }: Props) => {
-  const { user, initialized } = useSelector((state: RootState) => state.auth);
+  const { user, initialized } = useAppSelector(state => state.auth)
 
   if (!initialized) {
-    return <Loader/>;
+    return <Loader />
   }
 
   if (!user) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/login" replace />
   }
 
-  return children;
-};
+  return children
+}
 
-export default PrivateRoute;
+export default PrivateRoute
