@@ -35,13 +35,13 @@ build:
     - npm run build
   artifacts:
     paths:
-      - ./build
+      - dist
 
 pages:
   stage: deploy
   image: alpine:latest
   script:
-    - mv build public
+    - mv dist public
   artifacts:
     paths:
       - public
