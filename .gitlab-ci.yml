@@ -1,7 +1,7 @@
 stages:
   - install
   - lint
-#  - test
+  - test
   - build
   - deploy
 
@@ -20,12 +20,13 @@ lint:
   script:
     - npm run lint
 
-#test:
-#  stage: test
-#  image: mcr.microsoft.com/playwright:v1.54.0-noble
-#  script:
-#    - npm run build
-#    - npx playwright test
+test:
+  stage: test
+  image: mcr.microsoft.com/playwright:v1.54.0-noble
+  script:
+    - npm run build
+    - npx playwright install --with-deps
+    - npx playwright test
 
 
 build:
