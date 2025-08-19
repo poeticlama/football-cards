@@ -25,7 +25,10 @@ test:
   image: mcr.microsoft.com/playwright:v1.54.0-noble
   script:
     - npm run build
-    - npm run test
+    - npx vite preview --port 5173 &
+    - npx wait-on http://localhost:5173
+    - npx playwright test
+
 
 build:
   stage: build
