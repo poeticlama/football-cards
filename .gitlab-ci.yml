@@ -1,0 +1,49 @@
+stages:
+  - install
+  - lint
+  - test
+  - build
+  - deploy
+
+install:
+  stage: install
+  image: node:22.18.0
+  script:
+    - npm install
+  artifacts:
+    paths:
+      - ./node_modules
+
+lint:
+  stage: lint
+  image: node:22.18.0
+  script:
+    - npm run lint
+
+test:
+  stage: test
+  image: mcr.microsoft.com/playwright:v1.54.0-noble
+  script:
+    - npm run build
+    - npm run test
+
+build:
+  stage: build
+  image: node:22.18.0
+  script:
+    - npm run build
+  artifacts:
+    paths:
+      - ./build
+
+pages:
+  stage: deploy
+  image: alpine:latest
+  script:
+    - mv build public
+  artifacts:
+    paths:
+      - public
+  pages: true
+  environment: production
+
