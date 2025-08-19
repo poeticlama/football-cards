@@ -8,6 +8,7 @@ const initialState: PlayersStateType = {
   currentPlayer: null,
   loading: false,
   error: null,
+  sortBy: "default",
 }
 
 export const fetchPlayers = createAsyncThunk("players/fetchPlayers", async () => {
@@ -34,7 +35,28 @@ export const fetchPlayerById = createAsyncThunk("players/fetchById", async (id: 
 const playersSlice = createSlice({
   name: "players",
   initialState,
-  reducers: {},
+  reducers: {
+    setSortBy: (state, action: PayloadAction<string>) => {
+      state.sortBy = action.payload;
+
+      switch (state.sortBy) {
+        case "rating":
+          state.players = [...state.players].sort((a, b) => b.rating - a.rating);
+          break;
+        case "matches":
+          state.players = [...state.players].sort((a, b) => b.matches - a.matches);
+          break;
+        case "goals":
+          state.players = [...state.players].sort((a, b) => b.goals - a.goals);
+          break;
+        case "assists":
+          state.players = [...state.players].sort((a, b) => b.assists - a.assists);
+          break;
+        default:
+          break;
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchPlayers.pending, (state) => { state.loading = true; })
@@ -54,12 +76,12 @@ const playersSlice = createSlice({
         state.loading = false;
         state.currentPlayer = action.payload;
       })
-      .addCase(fetchPlayerById.rejected, (state, action) => {
+      .addCase(fetchPlayerById.rejected, (state ) => {
         state.loading = false;
         state.error = "Error fetching player";
       });
-    ;
   },
 });
 
+export const { setSortBy } = playersSlice.actions;
 export default playersSlice.reducer;

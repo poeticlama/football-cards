@@ -4,7 +4,7 @@ import Header from '../components/shared/Header';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../store';
-import { fetchPlayers } from '../store/players.slice';
+import { fetchPlayers, setSortBy } from '../store/players.slice';
 import Loader from '../components/shared/Loader';
 
 const ITEMS_PER_PAGE = 6;
@@ -43,6 +43,32 @@ const HomePage = () => {
           <Link to='new' className="rounded-xl bg-green-700 text-xl text-white py-3 px-7 hover:bg-green-800">
             + Add new player
           </Link>
+        </div>
+
+        <div className="flex justify-center mb-6">
+          <div className="flex items-center space-x-3 bg-white rounded-lg shadow-sm px-6 py-3">
+            <label htmlFor="sort" className="text-sm font-medium text-green-700 whitespace-nowrap">
+              Sort by:
+            </label>
+            <div className="relative">
+              <select
+                id="sort"
+                className="appearance-none bg-transparent border-0 py-2 pl-3 pr-8 focus:ring-0 focus:outline-none cursor-pointer text-gray-700"
+                onChange={(e) => dispatch(setSortBy(e.target.value))}
+              >
+                <option value="default">Default</option>
+                <option value="rating">Rating</option>
+                <option value="matches">Matches</option>
+                <option value="goals">Goals</option>
+                <option value="assists">Assists</option>
+              </select>
+              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center text-gray-400">
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                </svg>
+              </div>
+            </div>
+          </div>
         </div>
 
         <main className="container mx-auto px-4 py-8">

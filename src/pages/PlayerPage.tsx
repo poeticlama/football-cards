@@ -4,7 +4,7 @@ import DetailItem from '../components/player/DetailItem';
 import PlayerProfile from '../components/player/PlayerProfile';
 import { AppDispatch, RootState } from '../store';
 import { useDispatch, useSelector } from 'react-redux';
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 import { deletePlayer, fetchPlayerById } from '../store/players.slice';
 import Loader from '../components/shared/Loader';
 

@@ -16,4 +16,5 @@ export type PlayersStateType = {
   currentPlayer: PlayerType | null;
   loading: boolean;
   error: string | null;
+  sortBy: string;
 };
