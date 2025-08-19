@@ -1,12 +1,12 @@
 import { test, expect } from "@playwright/test"
 
 test("Players are sorted by rating", async ({ page }) => {
-  await page.goto("http://localhost:5173/login")
+  await page.goto("/login")
   await page.fill("#email", "mock@email.com")
   await page.fill("#password", "123123")
 
   await page.click('button[type="submit"]')
-  await expect(page).toHaveURL("http://localhost:5173/")
+  await expect(page).toHaveURL("/")
 
   await page.selectOption("#sort", "rating")
 

@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test"
 
 test("Login with correct data", async ({ page }) => {
-  await page.goto("http://localhost:5173/login")
+  await page.goto("/login")
 
   await page.fill("#email", "wrong@test.com")
   await page.fill("#password", "invalidpassword")
@@ -20,5 +20,5 @@ test("Login with correct data", async ({ page }) => {
   await page.fill("#password", "123123")
 
   await page.click('button[type="submit"]')
-  await expect(page).toHaveURL("http://localhost:5173/")
+  await expect(page).toHaveURL("/")
 })
