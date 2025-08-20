@@ -8,13 +8,13 @@ type PlayerProfileProps = {
 }
 
 const PlayerProfile = ({
-                         imageURL,
-                         position,
-                         name,
-                         club,
-                         rating,
-                         onChange,
-                       }: PlayerProfileProps) => {
+  imageURL,
+  position,
+  name,
+  club,
+  rating,
+  onChange,
+}: PlayerProfileProps) => {
   return (
     <div className="bg-white rounded-xl shadow-md overflow-hidden mb-8">
       <div className="md:flex">
@@ -32,10 +32,7 @@ const PlayerProfile = ({
           <h1 className="block mt-1 text-2xl font-bold text-gray-900">
             {name}
           </h1>
-          <div
-            className="mt-2 text-gray-600 font-medium focus:outline-none"
-
-          >
+          <div className="mt-2 text-gray-600 font-medium focus:outline-none">
             {club}
           </div>
           <div className="mt-4 flex">

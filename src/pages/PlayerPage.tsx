@@ -10,7 +10,7 @@ import {
 } from "../store/players.slice"
 import Loader from "../components/shared/Loader"
 import { useAppDispatch, useAppSelector } from "../hooks"
-import { PlayerType } from "../types"
+import type { PlayerType } from "../types"
 
 const PlayerPage = () => {
   const { id } = useParams<{ id: string }>()
@@ -52,7 +52,9 @@ const PlayerPage = () => {
   }
 
   const handleChange = (field: string, value: string) => {
-    setEditable((prev: any) => {
+    setEditable(prev => {
+      if (!prev) return prev
+
       if (field === "club") {
         return { ...prev, [field]: value }
       }
@@ -66,7 +68,6 @@ const PlayerPage = () => {
     })
   }
 
-
   return (
     editable && (
       <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-300 py-8">
@@ -75,8 +76,18 @@ const PlayerPage = () => {
             to="/"
             className="inline-flex items-center px-6 py-3 bg-green-600 text-white rounded-lg shadow-md hover:bg-green-700 transition-colors font-medium"
           >
-            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            <svg
+              className="w-5 h-5 mr-2"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M10 19l-7-7m0 0l7-7m-7 7h18"
+              />
             </svg>
             Back to players page
           </Link>
