@@ -8,7 +8,7 @@
 - Добавление нового игрока с фото, позицией и статистикой.
 - Просмотр списка игроков с сортировкой.
 - Страница игрока с информацией о нем и статистикой.
--  Удаление игрока.
+- Удаление игрока.
 - Линтинг и автоформатирование (ESLint + Prettier).
 - End-to-End тестирование (Playwright).
 - CI/CD пайплайн на GitLab (линтинг, тесты, деплой на GitLab Pages).
@@ -16,7 +16,7 @@
 ## Стек технологий
 - **Frontend**: React + TypeScript + Vite
 - **State management**: Redux Toolkit
-- **UI**: Tailwind CSS + shadcn/ui
+- **UI**: Tailwind CSS
 - **Backend/DB**: Firebase (Authentication + Firestore)
 - **Тестирование**: Playwright
 - **Качество кода**: ESLint, Prettier
