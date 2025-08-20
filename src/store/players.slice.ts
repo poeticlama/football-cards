@@ -7,6 +7,7 @@ import {
   deleteDoc,
   doc,
   getDoc,
+  updateDoc,
 } from "firebase/firestore"
 import { db } from "../../firebase"
 import type { PlayersStateType, PlayerType } from "../types"
@@ -41,6 +42,15 @@ export const deletePlayer = createAsyncThunk(
   "players/deletePlayer",
   async (id: string) => {
     await deleteDoc(doc(db, "players", id))
+  },
+)
+
+export const updatePlayer = createAsyncThunk(
+  "players/updatePlayer",
+  async (player: PlayerType) => {
+    const docRef = doc(db, "players", player.id)
+    await updateDoc(docRef, { ...player })
+    return player
   },
 )
 
@@ -111,6 +121,21 @@ const playersSlice = createSlice({
       .addCase(fetchPlayerById.rejected, state => {
         state.loading = false
         state.error = "Error fetching player"
+      })
+      .addCase(updatePlayer.pending, state => {
+        state.loading = true
+        state.error = null
+      })
+      .addCase(updatePlayer.fulfilled, (state, action) => {
+        state.loading = false
+        state.currentPlayer = action.payload
+        state.players = state.players.map(p =>
+          p.id === action.payload.id ? action.payload : p,
+        )
+      })
+      .addCase(updatePlayer.rejected, state => {
+        state.loading = false
+        state.error = "Error updating player"
       })
   },
 })

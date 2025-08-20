@@ -2,10 +2,15 @@ import { useNavigate, useParams } from "react-router-dom"
 import StatCard from "../components/player/StatCard"
 import DetailItem from "../components/player/DetailItem"
 import PlayerProfile from "../components/player/PlayerProfile"
-import { useEffect } from "react"
-import { deletePlayer, fetchPlayerById } from "../store/players.slice"
+import { useEffect, useState } from "react"
+import {
+  deletePlayer,
+  fetchPlayerById,
+  updatePlayer,
+} from "../store/players.slice"
 import Loader from "../components/shared/Loader"
 import { useAppDispatch, useAppSelector } from "../hooks"
+import { PlayerType } from "../types"
 
 const PlayerPage = () => {
   const { id } = useParams<{ id: string }>()
@@ -14,16 +19,27 @@ const PlayerPage = () => {
   const { currentPlayer, loading, error } = useAppSelector(
     state => state.players,
   )
+
+  const [editable, setEditable] = useState<PlayerType | null>(null)
+
   useEffect(() => {
     dispatch(fetchPlayerById(id))
-  }, [dispatch])
+  }, [dispatch, id])
+
+  useEffect(() => {
+    if (currentPlayer) setEditable(currentPlayer)
+  }, [currentPlayer])
 
   if (error) {
     return <div className="text-center py-20 text-2xl">Player not found</div>
   }
 
-  if (loading) {
-    return <Loader />
+  if (loading || !editable) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-300 py-8">
+        <Loader />
+      </div>
+    )
   }
 
   const handleDelete = () => {
@@ -31,39 +47,88 @@ const PlayerPage = () => {
     navigate("/")
   }
 
+  const handleSave = () => {
+    dispatch(updatePlayer(editable))
+  }
+
+  const handleChange = (field: string, value: string) => {
+    setEditable((prev: any) => {
+      if (field === "club") {
+        return { ...prev, [field]: value }
+      }
+
+      const parsed = Number(value)
+      if (isNaN(parsed)) {
+        return prev
+      }
+
+      return { ...prev, [field]: parsed }
+    })
+  }
+
+
   return (
-    currentPlayer && (
-      <div className="min-h-screen bg-gray-50 py-8">
+    editable && (
+      <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-300 py-8">
         <div className="max-w-4xl mx-auto px-4">
           <PlayerProfile
-            imageURL={currentPlayer.image}
-            position={currentPlayer.position}
-            name={currentPlayer.name}
-            club={currentPlayer.club}
-            rating={currentPlayer.rating}
+            imageURL={editable.image}
+            position={editable.position}
+            name={editable.name}
+            club={editable.club}
+            rating={editable.rating}
+            onChange={handleChange}
           />
 
           <div className="bg-white rounded-xl shadow-md overflow-hidden p-6 mb-8">
             <h2 className="text-xl font-bold text-gray-800 mb-4">Statistics</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <StatCard label="Matches" value={currentPlayer.matches} />
-              <StatCard label="Goals" value={currentPlayer.goals} />
-              <StatCard label="Assists" value={currentPlayer.assists} />
+              <StatCard
+                label="Matches"
+                value={editable.matches}
+                onChange={val => handleChange("matches", val)}
+              />
+              <StatCard
+                label="Goals"
+                value={editable.goals}
+                onChange={val => handleChange("goals", val)}
+              />
+              <StatCard
+                label="Assists"
+                value={editable.assists}
+                onChange={val => handleChange("assists", val)}
+              />
             </div>
           </div>
 
           <div className="bg-white rounded-xl shadow-md overflow-hidden p-6">
             <h2 className="text-xl font-bold text-gray-800 mb-4">Details</h2>
             <div className="space-y-3">
-              <DetailItem label="Age" value={String(currentPlayer.age)} />
-              <DetailItem label="Club" value={currentPlayer.club} />
-              <DetailItem label="Rating" value={`${currentPlayer.rating}`} />
+              <DetailItem
+                label="Age"
+                value={String(editable.age)}
+                onChange={val => handleChange("age", val)}
+              />
+              <DetailItem
+                label="Club"
+                value={editable.club}
+                onChange={val => handleChange("club", val)}
+              />
             </div>
           </div>
-          <div className="w-full flex justify-center mt-3">
+
+          <div className="w-full flex justify-center gap-4 mt-3">
             <button
               type="button"
-              className="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-500 hover:cursor-pointer transition-colors"
+              className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-500"
+              onClick={handleSave}
+              disabled={loading}
+            >
+              {loading ? "Saving..." : "Save changes"}
+            </button>
+            <button
+              type="button"
+              className="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-500"
               onClick={handleDelete}
             >
               Delete Player

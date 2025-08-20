@@ -7,7 +7,7 @@ const AboutPage = () => {
 
       <div className="container mx-auto px-4 py-12 max-w-5xl">
         <h1 className="text-5xl font-bold text-green-700 mb-6">
-          About Football App
+          Football Statistics
         </h1>
 
         <div className="prose prose-green">

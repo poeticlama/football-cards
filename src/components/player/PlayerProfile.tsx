@@ -4,15 +4,17 @@ type PlayerProfileProps = {
   name: string
   club: string
   rating: number
+  onChange: (field: string, val: string) => void
 }
 
 const PlayerProfile = ({
-  imageURL,
-  position,
-  name,
-  club,
-  rating,
-}: PlayerProfileProps) => {
+                         imageURL,
+                         position,
+                         name,
+                         club,
+                         rating,
+                         onChange,
+                       }: PlayerProfileProps) => {
   return (
     <div className="bg-white rounded-xl shadow-md overflow-hidden mb-8">
       <div className="md:flex">
@@ -30,9 +32,23 @@ const PlayerProfile = ({
           <h1 className="block mt-1 text-2xl font-bold text-gray-900">
             {name}
           </h1>
-          <div className="mt-2 text-gray-600 font-medium">{club}</div>
+          <div
+            className="mt-2 text-gray-600 font-medium focus:outline-none"
+
+          >
+            {club}
+          </div>
           <div className="mt-4 flex">
-            <span className="text-3xl font-bold text-green-600">{rating}</span>
+            <span
+              className="text-3xl font-bold text-green-600 focus:outline-none"
+              contentEditable={!!onChange}
+              suppressContentEditableWarning
+              onBlur={e =>
+                onChange?.("rating", e.currentTarget.textContent || "")
+              }
+            >
+              {rating}
+            </span>
           </div>
         </div>
       </div>
