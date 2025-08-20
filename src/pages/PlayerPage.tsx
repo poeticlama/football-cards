@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import StatCard from "../components/player/StatCard"
 import DetailItem from "../components/player/DetailItem"
 import PlayerProfile from "../components/player/PlayerProfile"
@@ -70,6 +70,18 @@ const PlayerPage = () => {
   return (
     editable && (
       <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-300 py-8">
+        <div className="flex justify-center mb-6">
+          <Link
+            to="/"
+            className="inline-flex items-center px-6 py-3 bg-green-600 text-white rounded-lg shadow-md hover:bg-green-700 transition-colors font-medium"
+          >
+            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Back to players page
+          </Link>
+        </div>
+
         <div className="max-w-4xl mx-auto px-4">
           <PlayerProfile
             imageURL={editable.image}
