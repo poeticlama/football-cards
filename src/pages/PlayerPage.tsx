@@ -11,12 +11,13 @@ import {
 import Loader from "../components/shared/Loader"
 import { useAppDispatch, useAppSelector } from "../hooks"
 import type { PlayerType } from "../types"
-import * as Sentry from "@sentry/react"
+import rollbar from "../../rollbar"
 
 const PlayerPage = () => {
   const { id } = useParams<{ id: string }>()
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
+  const [isUpdated, setIsUpdated] = useState(false)
   const { currentPlayer, loading, error } = useAppSelector(
     state => state.players,
   )
@@ -54,6 +55,7 @@ const PlayerPage = () => {
 
   const handleChange = (field: string, value: string) => {
     setEditable(prev => {
+      setIsUpdated(true)
       if (!prev) return prev
 
       if (field === "club") {
@@ -62,7 +64,7 @@ const PlayerPage = () => {
 
       const parsed = Number(value)
       if (isNaN(parsed)) {
-        Sentry.captureException(new Error("Update is not valid"))
+        rollbar.error("Invalid field data")
         return prev
       }
 
@@ -143,14 +145,16 @@ const PlayerPage = () => {
           </div>
 
           <div className="w-full flex justify-center gap-4 mt-3">
-            <button
-              type="button"
-              className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-500"
-              onClick={handleSave}
-              disabled={loading}
-            >
-              {loading ? "Saving..." : "Save changes"}
-            </button>
+            {isUpdated && (
+              <button
+                type="button"
+                className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-500"
+                onClick={handleSave}
+                disabled={loading}
+              >
+                Save changes
+              </button>
+            )}
             <button
               type="button"
               className="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-500"
