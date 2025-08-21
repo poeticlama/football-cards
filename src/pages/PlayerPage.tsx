@@ -11,6 +11,7 @@ import {
 import Loader from "../components/shared/Loader"
 import { useAppDispatch, useAppSelector } from "../hooks"
 import type { PlayerType } from "../types"
+import * as Sentry from "@sentry/react"
 
 const PlayerPage = () => {
   const { id } = useParams<{ id: string }>()
@@ -61,6 +62,7 @@ const PlayerPage = () => {
 
       const parsed = Number(value)
       if (isNaN(parsed)) {
+        Sentry.captureException("Update is not valid");
         return prev
       }
 

@@ -6,6 +6,7 @@ import {
   onAuthStateChanged,
   signOut,
 } from "firebase/auth"
+import * as Sentry from "@sentry/react"
 
 type AuthState = {
   user: { uid: string; email: string | null } | null
@@ -79,6 +80,7 @@ const authSlice = createSlice({
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false
         state.error = action.payload as string
+        Sentry.captureException(state.error);
       })
       .addCase(logoutUser.fulfilled, state => {
         state.user = null

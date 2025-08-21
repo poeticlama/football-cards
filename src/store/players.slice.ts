@@ -1,5 +1,6 @@
 import type { PayloadAction } from "@reduxjs/toolkit"
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
+import * as Sentry from "@sentry/react";
 import {
   collection,
   getDocs,
@@ -109,6 +110,7 @@ const playersSlice = createSlice({
       .addCase(fetchPlayers.rejected, state => {
         state.loading = false
         state.error = "Error fetching players"
+        Sentry.captureException(state.error);
       })
       .addCase(fetchPlayerById.pending, state => {
         state.loading = true
@@ -121,6 +123,7 @@ const playersSlice = createSlice({
       .addCase(fetchPlayerById.rejected, state => {
         state.loading = false
         state.error = "Error fetching player"
+        Sentry.captureException(state.error);
       })
       .addCase(updatePlayer.pending, state => {
         state.loading = true
@@ -136,6 +139,7 @@ const playersSlice = createSlice({
       .addCase(updatePlayer.rejected, state => {
         state.loading = false
         state.error = "Error updating player"
+        Sentry.captureException(state.error);
       })
   },
 })
