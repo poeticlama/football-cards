@@ -62,7 +62,7 @@ const PlayerPage = () => {
 
       const parsed = Number(value)
       if (isNaN(parsed)) {
-        Sentry.captureException("Update is not valid");
+        Sentry.captureException(new Error("Update is not valid"))
         return prev
       }
 

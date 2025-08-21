@@ -1,4 +1,4 @@
-import * as Sentry from "@sentry/react";
+import * as Sentry from "@sentry/react"
 import ReactDOM from "react-dom/client"
 import { Provider } from "react-redux"
 import { store } from "./store"
@@ -16,13 +16,11 @@ Sentry.init({
   beforeSend(event) {
     logToFirebase({
       message: event.message,
-      stack: event.exception?.values?.[0]?.stacktrace,
-      level: event.level,
       context: event.transaction,
-    });
-    return event;
+    })
+    return event
   },
-});
+})
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <Provider store={store}>
