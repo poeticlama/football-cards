@@ -56,7 +56,7 @@ jobs:
       - name: Build project
         run: npm run build
       - name: Setup Playwright
-        uses: microsoft/playwright-github-action@v1
+        run: npx playwright install --with-deps
       - name: Run tests
         run: npx playwright test
 
