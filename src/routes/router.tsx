@@ -6,39 +6,44 @@ import NewPlayerPage from "../pages/AddPlayerPage"
 import LoginPage from "../pages/LoginPage"
 import PrivateRoute from "../components/login/PrivateRoute"
 
-export const router = createBrowserRouter([
-  { path: "/login", element: <LoginPage /> },
+export const router = createBrowserRouter(
+  [
+    { path: "/login", element: <LoginPage /> },
 
+    {
+      path: "/",
+      element: (
+        <PrivateRoute>
+          <HomePage />
+        </PrivateRoute>
+      ),
+    },
+    {
+      path: "about",
+      element: (
+        <PrivateRoute>
+          <AboutPage />
+        </PrivateRoute>
+      ),
+    },
+    {
+      path: "new",
+      element: (
+        <PrivateRoute>
+          <NewPlayerPage />
+        </PrivateRoute>
+      ),
+    },
+    {
+      path: "player/:id",
+      element: (
+        <PrivateRoute>
+          <PlayerDetailsPage />
+        </PrivateRoute>
+      ),
+    },
+  ],
   {
-    path: "/",
-    element: (
-      <PrivateRoute>
-        <HomePage />
-      </PrivateRoute>
-    ),
+    basename: "/football-cards",
   },
-  {
-    path: "about",
-    element: (
-      <PrivateRoute>
-        <AboutPage />
-      </PrivateRoute>
-    ),
-  },
-  {
-    path: "new",
-    element: (
-      <PrivateRoute>
-        <NewPlayerPage />
-      </PrivateRoute>
-    ),
-  },
-  {
-    path: "player/:id",
-    element: (
-      <PrivateRoute>
-        <PlayerDetailsPage />
-      </PrivateRoute>
-    ),
-  },
-])
+)
