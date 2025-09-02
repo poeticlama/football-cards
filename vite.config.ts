@@ -4,6 +4,7 @@ import tailwindcss from "@tailwindcss/vite"
 
 export default defineConfig({
   plugins: [tailwindcss(), react()],
+  base: "/football-cards/",
   server: {
     port: 5173,
   },
