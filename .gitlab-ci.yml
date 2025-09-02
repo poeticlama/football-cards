@@ -28,7 +28,6 @@ test:
     - npx playwright install --with-deps
     - npx playwright test
 
-
 build:
   stage: build
   image: node:22.18.0
@@ -48,4 +47,3 @@ pages:
       - public
   pages: true
   environment: production
-
