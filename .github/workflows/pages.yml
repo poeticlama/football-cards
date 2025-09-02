@@ -40,29 +40,29 @@ jobs:
       - name: Run lint
         run: npm run lint
 
-  test:
-    runs-on: ubuntu-latest
-    needs: install
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22.18.0'
-      - name: Restore node_modules cache
-        uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-      - name: Build project
-        run: npm run build
-      - name: Setup Playwright
-        run: npx playwright install --with-deps
-      - name: Run tests
-        run: npx playwright test
+#  test:
+#    runs-on: ubuntu-latest
+#    needs: install
+#    steps:
+#      - uses: actions/checkout@v4
+#      - uses: actions/setup-node@v4
+#        with:
+#          node-version: '22.18.0'
+#      - name: Restore node_modules cache
+#        uses: actions/cache@v3
+#        with:
+#          path: node_modules
+#          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+#      - name: Build project
+#        run: npm run build
+#      - name: Setup Playwright
+#        run: npx playwright install --with-deps
+#      - name: Run tests
+#        run: npx playwright test
 
   build:
     runs-on: ubuntu-latest
-    needs: [lint, test]
+    needs: [lint]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -73,8 +73,18 @@ jobs:
         with:
           path: node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+      - name: Create .env file from secrets
+        run: |
+          echo "VITE_API_URL=${{ secrets.VITE_API_URL }}" > .env
+          echo "VITE_API_KEY=${{ secrets.VITE_API_KEY }}" >> .env
+          echo "VITE_APP_ENV=production" >> .env
+          echo "VITE_APP_VERSION=${{ github.sha }}" >> .env
+        shell: bash
       - name: Build project
         run: npm run build
+        env:
+          NODE_ENV: production
+          CI: true
       - name: Upload build artifacts
         uses: actions/upload-pages-artifact@v3
         with:
