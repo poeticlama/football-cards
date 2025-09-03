@@ -10,14 +10,14 @@ const LoginPage = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const { loading, error } = useAppSelector(state => state.auth)
-  const [email, setEmail] = useState("")
+  const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
 
   const handleLogin = async (e: FormEvent) => {
     e.preventDefault()
-    setEmail("")
+    setUsername("")
     setPassword("")
-    const res = await dispatch(loginUser({ email, password }))
+    const res = await dispatch(loginUser({ username, password }))
     if (loginUser.fulfilled.match(res)) {
       navigate("/")
     }
@@ -37,12 +37,12 @@ const LoginPage = () => {
         <form onSubmit={handleLogin} className="bg-transparent p-8">
           <div className="space-y-6">
             <CustomInput
-              id="email"
-              label="Email"
-              placeholder="Enter your email"
-              type="email"
-              value={email}
-              onChange={e => setEmail(e.target.value)}
+              id="username"
+              label="Username"
+              placeholder="Enter your username"
+              type="text"
+              value={username}
+              onChange={e => setUsername(e.target.value)}
             />
 
             <CustomInput
@@ -63,7 +63,7 @@ const LoginPage = () => {
           </button>
           {error && (
             <div className="text-md text-red-500 text-center mt-3">
-              Wrong email or password
+              Wrong username or password
             </div>
           )}
         </form>
