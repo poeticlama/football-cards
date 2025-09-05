@@ -18,3 +18,10 @@ export type PlayersStateType = {
   error: string | null
   sortBy: string
 }
+
+export type UserDataType = {
+  id: string
+  username: string
+  password: string
+  players: PlayerType[]
+}
