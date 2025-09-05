@@ -7,6 +7,7 @@ export const store = configureStore({
     players: playersReducer,
     auth: authReducer,
   },
+  devTools: true,
 })
 
 export type RootState = ReturnType<typeof store.getState>

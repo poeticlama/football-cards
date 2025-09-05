@@ -12,6 +12,7 @@ import {
 import { db } from "../../firebase"
 import type { PlayersStateType, PlayerType } from "../types"
 import rollbar from "../../rollbar"
+import type { RootState } from "./index"
 
 const initialState: PlayersStateType = {
   players: [],
@@ -23,8 +24,19 @@ const initialState: PlayersStateType = {
 
 export const fetchPlayers = createAsyncThunk(
   "players/fetchPlayers",
-  async () => {
-    const querySnapshot = await getDocs(collection(db, "players"))
+  async (_, { getState }) => {
+    const state = getState() as RootState
+    const uid = state.auth.user?.uid
+    if (!uid) {
+      throw new Error("User not authenticated")
+    }
+
+    const playersRef = collection(db, "users", uid, "players")
+    const querySnapshot = await getDocs(playersRef)
+    if (querySnapshot.empty) {
+      return []
+    }
+
     return querySnapshot.docs.map(doc => ({
       id: doc.id,
       ...doc.data(),

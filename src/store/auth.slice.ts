@@ -39,7 +39,7 @@ export const loginUser = createAsyncThunk(
       if (!docData) return rejectWithValue("Unauthorized")
 
       if (docData?.password === password) {
-        return { uid: docData.id, username: docData.username }
+        return { uid: userDoc.id, username: docData.username }
       } else {
         rejectWithValue("Wrong password")
       }
@@ -81,10 +81,8 @@ const authSlice = createSlice({
         state.loading = false
         if (action.payload) {
           state.user = action.payload
-          if (state.user.uid && state.user.username) {
-            localStorage.setItem("uid", state.user.uid)
-            localStorage.setItem("username", state.user.username)
-          }
+          localStorage.setItem("uid", String(state.user.uid))
+          localStorage.setItem("username", String(state.user.username))
         }
       })
       .addCase(loginUser.rejected, (state, action) => {
