@@ -46,22 +46,37 @@ export const fetchPlayers = createAsyncThunk(
 
 export const addPlayer = createAsyncThunk(
   "players/addPlayer",
-  async (player: Omit<PlayerType, "id">) => {
-    await addDoc(collection(db, "players"), player)
+  async (player: Omit<PlayerType, "id">, { getState }) => {
+    const state = getState() as RootState
+    const uid = state.auth.user?.uid
+    if (!uid) {
+      throw new Error("User not authenticated")
+    }
+    await addDoc(collection(db, "users", uid, "players"), player)
   },
 )
 
 export const deletePlayer = createAsyncThunk(
   "players/deletePlayer",
-  async (id: string) => {
-    await deleteDoc(doc(db, "players", id))
+  async (id: string, { getState }) => {
+    const state = getState() as RootState
+    const uid = state.auth.user?.uid
+    if (!uid) {
+      throw new Error("User not authenticated")
+    }
+    await deleteDoc(doc(db, "users", uid, "players", id))
   },
 )
 
 export const updatePlayer = createAsyncThunk(
   "players/updatePlayer",
-  async (player: PlayerType) => {
-    const docRef = doc(db, "players", player.id)
+  async (player: PlayerType, { getState }) => {
+    const state = getState() as RootState
+    const uid = state.auth.user?.uid
+    if (!uid) {
+      throw new Error("User not authenticated")
+    }
+    const docRef = doc(db, "users", uid, "players", player.id)
     await updateDoc(docRef, { ...player })
     return player
   },
@@ -69,9 +84,14 @@ export const updatePlayer = createAsyncThunk(
 
 export const fetchPlayerById = createAsyncThunk(
   "players/fetchById",
-  async (id: string | undefined) => {
+  async (id: string | undefined, { getState }) => {
+    const state = getState() as RootState
+    const uid = state.auth.user?.uid
+    if (!uid) {
+      throw new Error("User not authenticated")
+    }
     if (!id) return null
-    const docRef = doc(db, "players", id)
+    const docRef = doc(db, "users", uid, "players", id)
     const docSnap = await getDoc(docRef)
 
     return { id: id, ...docSnap.data() } as PlayerType
