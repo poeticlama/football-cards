@@ -1,40 +1,24 @@
 import CustomInput from "../components/add_player/CustomInput"
-import type { FormEvent } from "react"
 import { useState } from "react"
-import { useAppDispatch, useAppSelector } from "../hooks"
-import { loginUser } from "../store/auth.slice"
-import { Link, useNavigate } from "react-router-dom"
-import Loader from "../components/shared/Loader"
 
-const LoginPage = () => {
-  const dispatch = useAppDispatch()
-  const navigate = useNavigate()
-  const { loading, error } = useAppSelector(state => state.auth)
+const RegisterPage = () => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
 
-  const handleLogin = async (e: FormEvent) => {
-    e.preventDefault()
-    setUsername("")
-    setPassword("")
-    const res = await dispatch(loginUser({ username, password }))
-    if (loginUser.fulfilled.match(res)) {
-      navigate("/")
-    }
+  const handleRegister = () => {
+    return
   }
-
-  if (loading) return <Loader />
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-300 flex items-center justify-center">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <h1 className="text-3xl md:text-4xl font-bold text-green-700 mb-2">
-            Log In
+            Sign Up
           </h1>
         </div>
 
-        <form onSubmit={handleLogin} className="bg-transparent p-8">
+        <form onSubmit={handleRegister} className="bg-transparent p-8">
           <div className="space-y-6">
             <CustomInput
               id="username"
@@ -59,25 +43,12 @@ const LoginPage = () => {
             type="submit"
             className="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-xl font-medium text-white bg-green-600 hover:bg-green-700 hover:cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors mt-10"
           >
-            Sign in
+            Sign up
           </button>
-          {error && (
-            <div className="text-md text-red-500 text-center mt-3">
-              Wrong username or password
-            </div>
-          )}
-          <div className="text-md text-green-700 text-center mt-3">
-            Don't have an account?{" "}
-            <Link to="/register">
-              <span className="text-green-500 cursor-pointer hover:underline">
-                Register here
-              </span>
-            </Link>
-          </div>
         </form>
       </div>
     </div>
   )
 }
 
-export default LoginPage
+export default RegisterPage
