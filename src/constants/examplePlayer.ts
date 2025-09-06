@@ -8,7 +8,7 @@ const examplePlayer = {
   assists: 14,
   position: "CAM",
   rating: 87,
-  age: 23
+  age: 23,
 }
 
 export default examplePlayer
