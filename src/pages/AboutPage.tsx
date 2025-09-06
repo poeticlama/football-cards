@@ -7,12 +7,12 @@ const AboutPage = () => {
 
       <div className="container mx-auto px-4 py-12 max-w-5xl">
         <h1 className="text-5xl font-bold text-green-700 mb-6">
-          Football Statistics
+          Football Cards
         </h1>
 
         <div className="prose prose-green">
           <p className="text-xl mb-4">
-            <span className="font-bold">Football Statistics</span> — это
+            <span className="font-bold">Football Cards</span> — это платформа
             платформа для отслеживания и анализа статистики игроков.
           </p>
 
