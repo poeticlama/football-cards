@@ -1,13 +1,29 @@
 import CustomInput from "../components/add_player/CustomInput"
+import type { FormEvent } from "react"
 import { useState } from "react"
+import { registerUser } from "../store/auth.slice"
+import { useAppDispatch, useAppSelector } from "../hooks"
+import { useNavigate } from "react-router-dom"
+import Loader from "../components/shared/Loader"
 
 const RegisterPage = () => {
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate()
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
+  const { loading, error } = useAppSelector(state => state.auth)
 
-  const handleRegister = () => {
-    return
+  const handleRegister = async (e: FormEvent) => {
+    e.preventDefault()
+    setUsername("")
+    setPassword("")
+    const res = await dispatch(registerUser({ username, password }))
+    if (registerUser.fulfilled.match(res)) {
+      navigate("/")
+    }
   }
+
+  if (loading) return <Loader />
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-300 flex items-center justify-center">
@@ -45,6 +61,11 @@ const RegisterPage = () => {
           >
             Sign up
           </button>
+          {error && (
+            <div className="text-md text-red-500 text-center mt-3">
+              { error }
+            </div>
+          )}
         </form>
       </div>
     </div>
