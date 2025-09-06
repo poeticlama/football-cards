@@ -62,9 +62,7 @@ const RegisterPage = () => {
             Sign up
           </button>
           {error && (
-            <div className="text-md text-red-500 text-center mt-3">
-              { error }
-            </div>
+            <div className="text-md text-red-500 text-center mt-3">{error}</div>
           )}
         </form>
       </div>

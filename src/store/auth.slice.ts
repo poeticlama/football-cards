@@ -78,6 +78,14 @@ export const registerUser = createAsyncThunk(
       password,
     }
     try {
+      const usersRef = collection(db, "users")
+      const q = query(usersRef, where("username", "==", username))
+
+      const querySnapshot = await getDocs(q)
+
+      if (!querySnapshot.empty) {
+        return rejectWithValue("User with this username already exists")
+      }
       const userRef = await addDoc(collection(db, "users"), user)
       const uid = userRef.id
       await addDoc(collection(db, "users", uid, "players"), examplePlayer)
