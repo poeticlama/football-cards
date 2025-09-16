@@ -103,27 +103,29 @@ const playersSlice = createSlice({
   initialState,
   reducers: {
     setSortBy: (state, action: PayloadAction<string>) => {
-      state.sortBy = action.payload
+      const sortBy = action.payload
 
-      switch (state.sortBy) {
+      switch (sortBy) {
         case "rating":
-          state.players = [...state.players].sort((a, b) => b.rating - a.rating)
-          break
-        case "matches":
-          state.players = [...state.players].sort(
-            (a, b) => b.matches - a.matches,
-          )
-          break
+          return {
+            ...state,
+            sortBy,
+            players: [...state.players].sort((a, b) => b.rating - a.rating),
+          }
         case "goals":
-          state.players = [...state.players].sort((a, b) => b.goals - a.goals)
-          break
-        case "assists":
-          state.players = [...state.players].sort(
-            (a, b) => b.assists - a.assists,
-          )
-          break
+          return {
+            ...state,
+            sortBy,
+            players: [...state.players].sort((a, b) => b.goals - a.goals),
+          }
+        case "matches":
+          return {
+            ...state,
+            sortBy,
+            players: [...state.players].sort((a, b) => b.matches - a.matches),
+          }
         default:
-          break
+          return { ...state, sortBy }
       }
     },
   },
