@@ -25,6 +25,7 @@
     "@sentry/react": "^10.5.0",
     "@sentry/tracing": "^7.120.4",
     "@tailwindcss/vite": "^4.1.12",
+    "@testing-library/react": "^16.3.0",
     "dotenv": "^17.2.1",
     "firebase": "^12.1.0",
     "react": "^19.1.1",
@@ -47,8 +48,10 @@
     "eslint-plugin-prettier": "^5.5.4",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
+    "jsdom": "^27.0.0",
     "prettier": "^3.6.2",
     "typescript": "^5.9.2",
-    "vite": "^7.1.2"
+    "vite": "^7.1.2",
+    "vitest": "^3.2.4"
   }
 }
