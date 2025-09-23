@@ -11,7 +11,6 @@ import {
 } from "firebase/firestore"
 import { db } from "../../firebase"
 import type { PlayersStateType, PlayerType } from "../types"
-import rollbar from "../../rollbar"
 import type { RootState } from "./index"
 
 const initialState: PlayersStateType = {
@@ -133,6 +132,7 @@ const playersSlice = createSlice({
     builder
       .addCase(fetchPlayers.pending, state => {
         state.loading = true
+        state.error = null
       })
       .addCase(
         fetchPlayers.fulfilled,
@@ -144,7 +144,6 @@ const playersSlice = createSlice({
       .addCase(fetchPlayers.rejected, state => {
         state.loading = false
         state.error = "Error fetching players"
-        rollbar.error(state.error)
       })
       .addCase(fetchPlayerById.pending, state => {
         state.loading = true
@@ -157,7 +156,6 @@ const playersSlice = createSlice({
       .addCase(fetchPlayerById.rejected, state => {
         state.loading = false
         state.error = "Error fetching player"
-        rollbar.error(state.error)
       })
       .addCase(updatePlayer.pending, state => {
         state.loading = true
@@ -173,7 +171,6 @@ const playersSlice = createSlice({
       .addCase(updatePlayer.rejected, state => {
         state.loading = false
         state.error = "Error updating player"
-        rollbar.error(state.error)
       })
   },
 })
