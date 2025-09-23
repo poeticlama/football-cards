@@ -5,8 +5,7 @@ import { Link } from "react-router-dom"
 import { fetchPlayers, setSortBy } from "../store/players.slice"
 import Loader from "../components/shared/Loader"
 import { useAppDispatch, useAppSelector } from "../hooks"
-
-const ITEMS_PER_PAGE = 6
+import { ITEMS_PER_PAGE } from "../constants/itemsPerPage"
 
 const HomePage = () => {
   const [currentPage, setCurrentPage] = useState(1)

@@ -1,17 +1,8 @@
 import type { PayloadAction } from "@reduxjs/toolkit"
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
-import {
-  collection,
-  getDocs,
-  addDoc,
-  deleteDoc,
-  doc,
-  getDoc,
-  updateDoc,
-} from "firebase/firestore"
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, updateDoc } from "firebase/firestore"
 import { db } from "../../firebase"
 import type { PlayersStateType, PlayerType } from "../types"
-import rollbar from "../../rollbar"
 import type { RootState } from "./index"
 
 const initialState: PlayersStateType = {
@@ -98,39 +89,38 @@ export const fetchPlayerById = createAsyncThunk(
   },
 )
 
+export const sortPlayers = (
+  sortBy: string,
+  players: PlayerType[],
+): PlayerType[] => {
+  switch (sortBy) {
+    case "rating":
+      return [...players].sort((a, b) => b.rating - a.rating)
+    case "matches":
+      return [...players].sort((a, b) => b.matches - a.matches)
+    case "goals":
+      return [...players].sort((a, b) => b.goals - a.goals)
+    case "assists":
+      return [...players].sort((a, b) => b.assists - a.assists)
+    default:
+      return players
+  }
+}
+
 const playersSlice = createSlice({
   name: "players",
   initialState,
   reducers: {
     setSortBy: (state, action: PayloadAction<string>) => {
-      state.sortBy = action.payload
-
-      switch (state.sortBy) {
-        case "rating":
-          state.players = [...state.players].sort((a, b) => b.rating - a.rating)
-          break
-        case "matches":
-          state.players = [...state.players].sort(
-            (a, b) => b.matches - a.matches,
-          )
-          break
-        case "goals":
-          state.players = [...state.players].sort((a, b) => b.goals - a.goals)
-          break
-        case "assists":
-          state.players = [...state.players].sort(
-            (a, b) => b.assists - a.assists,
-          )
-          break
-        default:
-          break
-      }
+      const sortBy = action.payload
+      state.players = sortPlayers(sortBy, state.players)
     },
   },
   extraReducers: builder => {
     builder
       .addCase(fetchPlayers.pending, state => {
         state.loading = true
+        state.error = null
       })
       .addCase(
         fetchPlayers.fulfilled,
@@ -142,7 +132,6 @@ const playersSlice = createSlice({
       .addCase(fetchPlayers.rejected, state => {
         state.loading = false
         state.error = "Error fetching players"
-        rollbar.error(state.error)
       })
       .addCase(fetchPlayerById.pending, state => {
         state.loading = true
@@ -155,7 +144,6 @@ const playersSlice = createSlice({
       .addCase(fetchPlayerById.rejected, state => {
         state.loading = false
         state.error = "Error fetching player"
-        rollbar.error(state.error)
       })
       .addCase(updatePlayer.pending, state => {
         state.loading = true
@@ -171,7 +159,6 @@ const playersSlice = createSlice({
       .addCase(updatePlayer.rejected, state => {
         state.loading = false
         state.error = "Error updating player"
-        rollbar.error(state.error)
       })
   },
 })
