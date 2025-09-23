@@ -1,14 +1,6 @@
 import type { PayloadAction } from "@reduxjs/toolkit"
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
-import {
-  collection,
-  getDocs,
-  addDoc,
-  deleteDoc,
-  doc,
-  getDoc,
-  updateDoc,
-} from "firebase/firestore"
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, updateDoc } from "firebase/firestore"
 import { db } from "../../firebase"
 import type { PlayersStateType, PlayerType } from "../types"
 import type { RootState } from "./index"
@@ -97,35 +89,31 @@ export const fetchPlayerById = createAsyncThunk(
   },
 )
 
+export const sortPlayers = (
+  sortBy: string,
+  players: PlayerType[],
+): PlayerType[] => {
+  switch (sortBy) {
+    case "rating":
+      return [...players].sort((a, b) => b.rating - a.rating)
+    case "matches":
+      return [...players].sort((a, b) => b.matches - a.matches)
+    case "goals":
+      return [...players].sort((a, b) => b.goals - a.goals)
+    case "assists":
+      return [...players].sort((a, b) => b.assists - a.assists)
+    default:
+      return players
+  }
+}
+
 const playersSlice = createSlice({
   name: "players",
   initialState,
   reducers: {
     setSortBy: (state, action: PayloadAction<string>) => {
       const sortBy = action.payload
-
-      switch (sortBy) {
-        case "rating":
-          return {
-            ...state,
-            sortBy,
-            players: [...state.players].sort((a, b) => b.rating - a.rating),
-          }
-        case "goals":
-          return {
-            ...state,
-            sortBy,
-            players: [...state.players].sort((a, b) => b.goals - a.goals),
-          }
-        case "matches":
-          return {
-            ...state,
-            sortBy,
-            players: [...state.players].sort((a, b) => b.matches - a.matches),
-          }
-        default:
-          return { ...state, sortBy }
-      }
+      state.players = sortPlayers(sortBy, state.players)
     },
   },
   extraReducers: builder => {
