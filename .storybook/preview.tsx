@@ -1,5 +1,6 @@
-import type { Preview } from "@storybook/react-vite"
+import type { Decorator, Preview } from "@storybook/react-vite"
 import ".././index.css"
+import { MemoryRouter } from "react-router"
 
 const preview: Preview = {
   parameters: {
@@ -18,5 +19,13 @@ const preview: Preview = {
     },
   },
 }
+
+export const decorators: Decorator[] = [
+  Story => (
+    <MemoryRouter initialEntries={["/"]}>
+      <Story />
+    </MemoryRouter>
+  ),
+]
 
 export default preview
