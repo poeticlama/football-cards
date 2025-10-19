@@ -5,8 +5,8 @@ type CustomInputProps = {
   label: string
   placeholder: string
   type: string
-  value: string
-  onChange: ChangeEventHandler<HTMLInputElement>
+  value?: string
+  onChange?: ChangeEventHandler<HTMLInputElement>
 }
 
 const CustomInput = ({

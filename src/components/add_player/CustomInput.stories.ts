@@ -16,7 +16,5 @@ export const Default: Story = {
     label: "Test",
     placeholder: "Test",
     type: "text",
-    value: "",
-    onChange: () => {},
   },
 }
